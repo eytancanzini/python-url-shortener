@@ -18,15 +18,18 @@ group_res = requests.get("https://api-ssl.bitly.com/v4/groups", headers=headers)
 if group_res.status_code == 200:
     groups_data = group_res.json()['groups'][0]
     guid = groups_data['guid']
+    print('[!] Got GUID: ', guid)
 else:
     print('[!] Cannot get GUID, exiting...')
     exit()
 
-url = sys.argv[1]
-shorten_res = requests.post("https://api-ssl.bitly.com/v4/shorten", json={"group_guid": guid, "long_url": url}, headers=headers)
-if shorten_res.status_code == 200:
-    link = shorten_res.json().get("link")
-    print("Shortened URL:", link)
-else:
-    print("[!] Error with URL, exiting...")
-    exit()
+if __name__ == "__main__":
+    print('Enter the URL you want to shorten:')
+    url = input()
+    shorten_res = requests.post("https://api-ssl.bitly.com/v4/shorten", json={"group_guid": guid, "long_url": url}, headers=headers)
+    if shorten_res.status_code == 200:
+        link = shorten_res.json().get("link")
+        print("Shortened URL:", link)
+    else:
+        print("[!] Error with URL, exiting...")
+        exit()
