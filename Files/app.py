@@ -25,8 +25,7 @@ else:
     exit()
 
 if __name__ == "__main__":
-    print('Enter the URL you want to shorten:')
-    url = input()
+    url = input('Enter the URL you want to shorten: ')
     while (True):
         shorten_res = requests.post("https://api-ssl.bitly.com/v4/shorten", json={"group_guid": guid, "long_url": url}, headers=headers)
         if shorten_res.status_code == 200:
