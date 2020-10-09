@@ -1,5 +1,6 @@
 import requests
 import sys
+import time
 
 username = "o_5tn54cki0a"
 password = "Can6269eml$"
@@ -26,10 +27,12 @@ else:
 if __name__ == "__main__":
     print('Enter the URL you want to shorten:')
     url = input()
-    shorten_res = requests.post("https://api-ssl.bitly.com/v4/shorten", json={"group_guid": guid, "long_url": url}, headers=headers)
-    if shorten_res.status_code == 200:
-        link = shorten_res.json().get("link")
-        print("Shortened URL:", link)
-    else:
-        print("[!] Error with URL, exiting...")
-        exit()
+    while (True):
+        shorten_res = requests.post("https://api-ssl.bitly.com/v4/shorten", json={"group_guid": guid, "long_url": url}, headers=headers)
+        if shorten_res.status_code == 200:
+            link = shorten_res.json().get("link")
+            print("Shortened URL:", link)
+            exit()
+        else:
+            print("[!] Error with URL, Retrying...")
+            time.sleep(3)
